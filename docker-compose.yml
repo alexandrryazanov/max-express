@@ -1,0 +1,18 @@
+version: "3.4"
+
+services:
+  db:
+    image: postgres:13-alpine
+    restart: always
+    container_name: max-db
+    environment:
+      - POSTGRES_DB=max-db
+      - POSTGRES_USER=dmt
+      - POSTGRES_PASSWORD=!ChangeMe!
+    volumes:
+      - db-data:/var/lib/postgresql/data-max:rw
+    ports:
+      - "5432:5432"
+
+volumes:
+  db-data: {}
