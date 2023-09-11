@@ -8,28 +8,42 @@ Node express.js based backend for Max S.
 ### 0. Install NodeJS
 
 ### 1. Install Git
-### 2. Clone projectAfter installing run it in "projects" folder:
+https://git-scm.com/download/win
+
+### 2. Clone project 
+After installing run it in your "projects" folder:
+
 
 `git clone https://github.com/alexandrryazanov/max-express.git`
 
-### 3. Install Docker and run it in project folder to start local PostgreSQL database:
+### 3. Open project in IDE (file -> open/open folder)
+
+### 4. Install Docker 
+https://www.docker.com/
+
+Run it in cloned project folder to start local PostgreSQL database:
 
 ```sh
 docker compose up
 ```
 
-### 4. install all node modules (run it in project folder)
+### 5. install all node modules 
+
+run it in project folder
 ```sh
 npm install
 ```
 
-### 5. Initialise the database (create all tables):
+### 6. Initialise the database
+
+create all tables (run it in project folder)
 
 ```sh
 npx prisma migrate deploy
 ```
 
-### 6. Start project in Dev mode (with restart after each saving)
+### 7. Start project in Dev mode (auto-restart after each saving)
+(run it in project folder)
 ```sh
 npm run dev
 ```
