@@ -1,16 +1,11 @@
 import express from "express";
-import { UsersController } from "./modules/users/users.controller";
-import { OrdersController } from "./modules/orders/orders.controller";
-import { Controller } from "./types";
+import { AppModule } from "./modules/app.module";
 
 const app = express();
 
-const controllers: Controller[] = [
-  new UsersController(),
-  new OrdersController(),
-];
+const appModule = new AppModule();
 
-controllers.forEach((controller) => {
+appModule.controllers.forEach((controller) => {
   app.use(controller.path, controller.router);
 });
 

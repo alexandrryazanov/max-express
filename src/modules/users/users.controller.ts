@@ -1,25 +1,37 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import { Controller } from "../../types";
+import { UsersService } from "./users.service";
 
 export class UsersController implements Controller {
-  private usersPath = "/users";
-  private usersRouter = Router();
+  public usersPath = "/users";
+  private ordersRouter = Router();
+  private service: UsersService;
 
-  constructor() {
+  constructor(service: UsersService) {
+    this.service = service;
     this.initRoutes();
+  }
+
+  get router() {
+    return this.ordersRouter;
   }
 
   get path() {
     return this.usersPath;
   }
 
-  get router() {
-    return this.usersRouter;
+  private initRoutes() {
+    this.router.get("/", this.getAll);
+    this.router.get("/:id", this.getOne);
   }
 
-  private initRoutes() {
-    this.router.get("/", (req, res) => res.send("GET users"));
-    this.router.get("/1", (req, res) => res.send("GET user 1"));
-    this.router.post("/", (req, res) => res.send("POST user"));
-  }
+  getAll = async (req: Request, res: Response) => {
+    const result = await this.service.getAll();
+    res.send(result);
+  };
+
+  getOne = async (req: Request, res: Response) => {
+    const result = await this.service.getOne(+req.params.id);
+    res.send(result);
+  };
 }

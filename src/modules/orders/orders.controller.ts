@@ -1,11 +1,14 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import { Controller } from "../../types";
+import { OrdersService } from "./orders.service";
 
 export class OrdersController implements Controller {
-  public path = "/orders";
+  public ordersPath = "/orders";
   private ordersRouter = Router();
+  private service: OrdersService;
 
-  constructor() {
+  constructor(service: OrdersService) {
+    this.service = service;
     this.initRoutes();
   }
 
@@ -13,11 +16,22 @@ export class OrdersController implements Controller {
     return this.ordersRouter;
   }
 
-  test() {}
+  get path() {
+    return this.ordersPath;
+  }
 
   private initRoutes() {
-    this.router.get("/", (req, res) => res.send("GET orders"));
-    this.router.get("/1", (req, res) => res.send("GET order 1"));
-    this.router.post("/", (req, res) => res.send("POST order"));
+    this.router.get("/", this.getAll);
+    this.router.get("/:id", this.getOne);
   }
+
+  getAll = async (req: Request, res: Response) => {
+    const result = await this.service.getAll();
+    res.send(result);
+  };
+
+  getOne = async (req: Request, res: Response) => {
+    const result = await this.service.getOne(+req.params.id);
+    res.send(result);
+  };
 }
